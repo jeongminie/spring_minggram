@@ -1,0 +1,20 @@
+#wrap {
+	width:1200px;
+
+	margin:auto;
+	background-color : #f8f9fa;
+}
+
+.login-box {
+	display : flex;
+	align-items : center;
+	width:400px;
+	border:2px solid LightGray;
+	background-color:white;
+}
+
+.image-box {
+	width: auto; height: auto;
+
+	overflow: hidden
+}
