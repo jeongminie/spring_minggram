@@ -1,9 +1,16 @@
 #wrap {
 	width:1200px;
-
+	height:800px;
 	margin:auto;
 	background-color : #f8f9fa;
 }
+
+header {
+	height:70px;
+	background-color:white;
+	border:2px solid LightGray;
+}
+
 
 .login-box {
 	display : flex;
@@ -13,8 +20,19 @@
 	background-color:white;
 }
 
-.image-box {
-	width: auto; height: auto;
+img{
+	height:40px;	
+}
 
-	overflow: hidden
+.text-box {
+
+	width:900px;
+	height:200px;
+	border:2px solid LightGray;
+	background-color:white;
+}
+
+textarea {
+	border: none;
+	outline:none
 }
