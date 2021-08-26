@@ -1,4 +1,4 @@
-package com.jeongmini.minggram.post;
+package com.jeongmini.minggram.post.comment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,30 +11,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.jeongmini.minggram.post.bo.PostBO;
-import com.jeongmini.minggram.post.model.Post;
+import com.jeongmini.minggram.post.comment.bo.CommentBO;
 
 @RestController
-@RequestMapping("/post")
-public class PostRestController {
+@RequestMapping("/comment")
+public class CommentRestController {
 	@Autowired
-	private PostBO postBO;
+	private CommentBO commentBO;
 	
 	@PostMapping("/create")
-	public Map<String, String> create(
-			@RequestParam("content") String content,
-			HttpServletRequest request,
-			@RequestParam(value="file", required=false) MultipartFile file
-			) {
+	public Map<String, String> commentUpload(
+			@RequestParam("postId") int postId,
+			@RequestParam("comment") String comment,
+			HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
 		int userId = (Integer)session.getAttribute("userId");
 		String userName = (String)session.getAttribute("userName");
-	
-		int count = postBO.addPost(userId, userName, content, file);
 		
+		int count = commentBO.addComment(userId, userName, postId, comment);
 		Map<String, String> result = new HashMap<>();
 		
 		if(count == 1) {
@@ -45,6 +41,7 @@ public class PostRestController {
 		
 		return result;
 
+		
 	}
 
 }

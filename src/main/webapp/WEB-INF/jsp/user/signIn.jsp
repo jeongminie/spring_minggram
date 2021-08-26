@@ -19,7 +19,8 @@
 			<c:if test="${not empty userName }">
 				<div class="d-flex justify-content-end">${userName }님&nbsp;&nbsp; <a href="/user/sign_out">로그아웃</a> </div>
 			</c:if>
-		<section class="content d-flex justify-content-center align-items-center">
+
+		<section class="content d-flex justify-content-center align-items-center">	
 			<div class="login-box p-4 mt-5">
 				<div class="w-100">
 					<div class="d-flex justify-content-center align-items-center mb-4">
@@ -29,18 +30,30 @@
 						<input id="userNameInput" type="text" class="form-control mt-3" placeholder="사용자이름">
 						<input id="passwordInput" type="password" class="form-control mt-3" placeholder="패스워드">
 						<button id="loginBtn" type="submit" class="btn btn-primary btn-block mt-3">로그인</button>
+						<div class="d-flex justify-content-center align-items-center mt-4">
+							<hr class="mr-4 col-3">또는<hr class="ml-4 col-3">
+						</div>
+						<small class="d-flex justify-content-center align-items-center mt-2">비밀번호를 잊으셨나요?</small>
 					</form>
-					<hr class="mt-4">
-					<div class="mt-3 text-center" >계정이 없으신가요?&nbsp;&nbsp;&nbsp;<a href="/user/signUp_view">회원가입</a></div>
 				</div>
+			</div>
+		</section>
+		<section class="content d-flex justify-content-center align-items-center">	
+			<div class="login-box p-4 mt-2">
+				<div class="text-center w-100" >계정이 없으신가요?&nbsp;&nbsp;&nbsp;<a href="/user/signUp_view">회원가입</a></div>
 			</div>
 		</section>
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />
 	</div>
 	
 	<script>
+	
+
 		$(document).ready(function(){
-			$("#loginForm").on("submit", function(){
+			$("#loginForm").on("submit", function(e){
+				
+				e.preventDefault();
+				
 				var userName = $("#userNameInput").val();
 				var password = $("#passwordInput").val();
 				

@@ -18,6 +18,6 @@ public interface PostDAO {
 			);
 	
 	public List<Post> selectTimeLine();
-	
+
 
 }

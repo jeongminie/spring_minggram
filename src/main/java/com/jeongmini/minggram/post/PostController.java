@@ -24,9 +24,9 @@ public class PostController {
 	public String createView(Model model,
 			HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		int userId = (Integer)session.getAttribute("userId");
-		List<Post> timeLine = postBO.getTimeLine();
-		model.addAttribute("timeLine", timeLine);
+
+		List<Post> post = postBO.getTimeLine();
+		model.addAttribute("post", post);
 		return "post/createView";
 	}
 }

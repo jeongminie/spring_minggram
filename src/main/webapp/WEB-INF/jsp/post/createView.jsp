@@ -20,7 +20,8 @@
 		<c:import url="/WEB-INF/jsp/include/header.jsp" />	
 		<section>
 			<div class="d-flex justify-content-center align-items-center p-4">
-				<div class="text-box">
+			
+				<div class="text-box rounded">
 					<div class="userNameInfo mt-2 mb-2">
 						<i class="bi bi-person-circle mr-2"></i>
 						<c:if test="${not empty userName }">
@@ -28,28 +29,29 @@
 						</c:if>
 					</div>
 					<div class="d-flex justify-content-center align-items-center">
-						<textarea style="border: none; outline: none" class="form-control col-10" rows="5" placeholder="내용을 입력해주세요 ..." id="contentInput"></textarea>
+						<textarea class="form-control col-10 border-0 non-resize" rows="5" placeholder="내용을 입력해주세요 ..." id="contentInput"></textarea>
 					</div>	
-					<div class="d-flex justify-content-center align-items-center mt-2">
-						<input type="file" accept="image/*" id="fileInput" class="col-10 mb-2">
+					<div class="d-flex justify-content-between align-items-center m-2">
+						<input type="file" accept="image/*" id="fileInput" class="col-10 mb-2 d-none">
+						<a href="#" id="imageUploadBtn"><i class="bi bi-card-image mr-2 text-dark"></i><span class="text-dark">파일 첨부하기</span></a>
 						<button type="button" class="btn btn-info btn-sm mb-2" id="saveBtn">업로드</button>
 					</div>
 				</div>
 			</div>
 			
-			<c:forEach var="timeLine" items="${timeLine }" varStatus="status">
+			<c:forEach var="post" items="${post }" varStatus="status">
 				<div class="d-flex justify-content-center align-items-center p-4">
-					<div class="timeLine">
+					<div class="timeLine rounded">
 						<div class="userNameInfo mt-2 mb-2 d-flex justify-content-between">
 							<div>
 								<i class="bi bi-person-circle mr-2"></i>
-								<span>${timeLine.userName }</span>
+								<span>${post.userName }</span>
 							</div>
 							<i class="bi bi-three-dots mr-2"></i>
 						</div>
 						<div>
-							<c:if test="${not empty timeLine.imagePath }">
-								<img src="${timeLine.imagePath }" class="imagePath-size w-100">
+							<c:if test="${not empty post.imagePath }">
+								<img src="${post.imagePath }" class="imagePath-size w-100">
 							</c:if>
 						</div>
 						<div class="mt-2">
@@ -59,15 +61,22 @@
 							<div class="mt-1 ml-2">좋아요 16개</div>
 						</div>
 						<div class="ml-2">
-							<b class="mr-2">${userName }</b>
-							${timeLine.content }
+							<b class="mr-2">${post.userName }</b>
+							${post.content }
 						</div>
+						<c:forEach var="comment" items="${comment }">
+							<c:if test="${post.id } == ${comment.postId }" />
+								<div>
+									${comment.comment }
+								</div>
+						</c:forEach>
 						<div class="comment-box w-100 d-flex justify-content-center align-items-center" >
-							<input type="text" class="form-control col-10 mt-2" style="border:none" placeholder="댓글 달기...">
-							<button class="btn btn-link btn-sm">게시</button> 
+							<input type="text" class="form-control col-10 mt-2" id="commentInput-${post.id }" style="border:none" placeholder="댓글 달기...">
+							<button class="btn btn-link btn-sm commentBtn" data-post-id="${post.id }">게시</button> 
 						</div>
 					</div>			
 				</div>
+
 			</c:forEach>
 		</section>
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />
@@ -80,6 +89,11 @@
 				
 				if(content == null || content == "") {
 					alert("내용을 입력하세요");
+					return ;
+				}
+				
+				if($("#fileInput")[0].files.length ==0) {
+					alert("파일을 추가하세요");
 					return ;
 				}
 				
@@ -108,6 +122,35 @@
 					}
 				});
 				
+			});
+			
+			$("#imageUploadBtn").on("click", function(){
+				$("#fileInput").click();
+			});
+			
+			$(".commentBtn").on("click", function(){
+				//           버튼에 대한 정보를 가져옴 
+				var postId = $(this).data("post-id");
+				var comment = $("#commentInput-" + postId).val();
+				
+				if(comment == null || comment == "") {
+					alert("댓글을 입력하세요");
+					return ;
+				}
+				
+				$.ajax({
+					type:"post",
+					url:"/comment/create",
+					data:{"comment":comment, "postId":postId},
+					success:function(data) {
+						if(data.result == "success") {
+							alert("댓글 달기 성공");
+						} else {
+							alert("댓글 달기 실패");
+						}
+					}
+					
+				});
 			});
 		});
 	

@@ -23,6 +23,7 @@
 					<div class="d-flex justify-content-center align-items-center mb-4">
 						<img src="/image/logo.jpg">
 					</div>
+					<h5 class="text-secondary text-center font-weight-bold">친구들의 사진과 동영상을 보려면 <br> 가입하세요.</h5>
 					<form id="signupForm">
 						<input id="emailInput" type="text" class="form-control mt-3" placeholder="이메일 주소">
 						<input id="nameInput" type="text" class="form-control mt-3" placeholder="성명">
@@ -36,10 +37,13 @@
 						<input type="password" id="passwordConfirmInput" class="form-control mt-3" placeholder="패스워드 확인">
 						<small id="errorPassword" class="text-danger d-none">비밀번호가 일치하지 않습니다.</small>
 						<button id="signupBtn" type="submit" class="btn btn-primary btn-block mt-3">가입</button>
-					</form>
-					<hr class="mt-4">
-					<div class="mt-3 text-center" >계정이 있으신가요?&nbsp;&nbsp;&nbsp;<a href="/user/signIn_view">로그인</a></div>
+					</form>		
 				</div>
+			</div>
+		</section>
+		<section class="content d-flex justify-content-center align-items-center">	
+			<div class="login-box p-4 mt-2">
+				<div>계정이 있으신가요?&nbsp;&nbsp;&nbsp;<a href="/user/signIn_view">로그인</a></div>
 			</div>
 		</section>
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />
