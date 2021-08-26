@@ -22,6 +22,18 @@
  		)
  	
  	</insert>
- 
- 
+ 	
+ 	<select id="selectTimeLine" parameterType="map" resultType="com.jeongmini.minggram.post.model.Post">
+ 		SELECT
+ 			`id`
+ 			, `userName`
+ 			, `content`
+ 			, `imagePath`
+ 			, `createdAt`
+ 			, `updatedAt`
+ 		FROM
+ 			`post`
+ 		ORDER BY `id` DESC;
+ 		
+ 	</select>
  </mapper>
