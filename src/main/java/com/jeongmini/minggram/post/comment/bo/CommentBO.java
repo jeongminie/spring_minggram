@@ -17,9 +17,10 @@ public class CommentBO {
 		return commentDAO.insertComment(userId, userName, postId, comment);
 	}
 	
-	public List<Comment> getComment() {
-		return commentDAO.selectComment();
+	public List<Comment> getCommentListByPostId(int postId) {
+		return commentDAO.selectCommentListByPostId(postId);
 	}
+	
 
 
 }

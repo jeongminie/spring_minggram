@@ -16,6 +16,7 @@ public interface CommentDAO {
 			@Param("postId") int postId,
 			@Param("comment") String comment);
 	
-	public List<Comment> selectComment();
+	public List<Comment> selectCommentListByPostId(
+			@Param("postId") int postId);
 
 }

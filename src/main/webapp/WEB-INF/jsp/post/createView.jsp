@@ -11,7 +11,7 @@
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   	
-  	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+  	 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   	<link rel="stylesheet" href="/css/style.css">
 <title>타임라인</title>
 </head>
@@ -39,19 +39,19 @@
 				</div>
 			</div>
 			
-			<c:forEach var="post" items="${post }" varStatus="status">
+			<c:forEach var="postWithComments" items="${post }" varStatus="status">
 				<div class="d-flex justify-content-center align-items-center p-4">
 					<div class="timeLine rounded">
 						<div class="userNameInfo mt-2 mb-2 d-flex justify-content-between">
 							<div>
 								<i class="bi bi-person-circle mr-2"></i>
-								<span>${post.userName }</span>
+								<span>${postWithComments.post.userName }</span>
 							</div>
 							<i class="bi bi-three-dots mr-2"></i>
 						</div>
 						<div>
-							<c:if test="${not empty post.imagePath }">
-								<img src="${post.imagePath }" class="imagePath-size w-100">
+							<c:if test="${not empty postWithComments.post.imagePath }">
+								<img src="${postWithComments.post.imagePath }" class="imagePath-size w-100">
 							</c:if>
 						</div>
 						<div class="mt-2">
@@ -60,19 +60,24 @@
 							<br>
 							<div class="mt-1 ml-2">좋아요 16개</div>
 						</div>
+						
 						<div class="ml-2">
-							<b class="mr-2">${post.userName }</b>
-							${post.content }
+							<b class="mr-2">${postWithComments.post.userName }</b>
+							${postWithComments.post.content }
 						</div>
-						<c:forEach var="comment" items="${comment }">
-							<c:if test="${post.id } == ${comment.postId }" />
-								<div>
-									${comment.comment }
-								</div>
-						</c:forEach>
-						<div class="comment-box w-100 d-flex justify-content-center align-items-center" >
-							<input type="text" class="form-control col-10 mt-2" id="commentInput-${post.id }" style="border:none" placeholder="댓글 달기...">
-							<button class="btn btn-link btn-sm commentBtn" data-post-id="${post.id }">게시</button> 
+						<div>
+							<div>
+								<span class="ml-2 text-secondary">댓글 보기</span>
+								<c:forEach var="comment" items="${ postWithComments.commentList}">
+									<div class="ml-2">
+										<b>${comment.userName }</b> ${comment.comment }
+									</div>
+								</c:forEach>						
+							</div>
+							<div class="comment-box w-100 d-flex justify-content-center align-items-center" >
+								<input type="text" class="form-control col-10 mt-2" id="commentInput-${postWithComments.post.id }" style="border:none" placeholder="댓글 달기...">
+								<button class="btn btn-link btn-sm commentBtn" data-post-id="${postWithComments.post.id }">게시</button> 
+							</div>
 						</div>
 					</div>			
 				</div>
@@ -131,7 +136,7 @@
 			$(".commentBtn").on("click", function(){
 				//           버튼에 대한 정보를 가져옴 
 				var postId = $(this).data("post-id");
-				var comment = $("#commentInput-" + postId).val();
+				var comment = $("#commentInput-" + postId).val().trim();
 				
 				if(comment == null || comment == "") {
 					alert("댓글을 입력하세요");
@@ -140,14 +145,17 @@
 				
 				$.ajax({
 					type:"post",
-					url:"/comment/create",
-					data:{"comment":comment, "postId":postId},
+					url:"/post/comment/create",
+					data:{"postId":postId, "comment":comment},
 					success:function(data) {
 						if(data.result == "success") {
-							alert("댓글 달기 성공");
+							location.reload();
 						} else {
-							alert("댓글 달기 실패");
+							alert("댓글 작성 실패");
 						}
+					},
+					error:function(e) {
+						alert("error");
 					}
 					
 				});

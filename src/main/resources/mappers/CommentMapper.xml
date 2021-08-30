@@ -5,25 +5,27 @@
  <mapper namespace="com.jeongmini.minggram.post.comment.dao.CommentDAO">
  	<insert id="insertComment" parameterType="map">
  		INSERT INTO `comment`
- 		(
+ 		( 
  			`userId`
- 			,`userName`
- 			,`postId`
- 			,`comment`
+ 			, `postId`
+ 			, `userName`
+ 			, `content`
  			, `createdAt`
  			, `updatedAt`
- 		) VALUES (
- 			#{userId}
- 			, #{userName}
- 			, #{postId}
- 			, #{comment}
- 			, now()
- 			, now()
- 		)
+		)
+		VALUES 
+		(
+			#{userId}
+			, #{postId}
+			, #{userName}
+			, #{content}
+			, now()
+			, now()
+		)
  		
  	</insert>
  	
- 	<select id="selectComment" parameterType="map" resultType="com.jeongmini.minggram.post.comment.model.Comment">
+ 	<select id="selectCommentListByPostId" parameterType="map" resultType="com.jeongmini.minggram.post.comment.model.Comment">
  		SELECT
  			`id`
  			, `userName`
@@ -33,6 +35,8 @@
  			, `updatedAt`
  		FROM
  			`comment`
+ 		WHERE 
+ 			`postId` = #{postId}
  		ORDER BY `id` DESC;
  		
  	</select>
