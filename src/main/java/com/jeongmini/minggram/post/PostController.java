@@ -1,5 +1,6 @@
 package com.jeongmini.minggram.post;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,10 @@ public class PostController {
 	public String createView(Model model) {
 		
 		List<PostWithComments> post = postBO.getPostList();
+		int count = Collections.frequency(post, post);
+		
 		model.addAttribute("post", post);
+		model.addAttribute("count", count);
 		return "post/createView";
 	}
 }

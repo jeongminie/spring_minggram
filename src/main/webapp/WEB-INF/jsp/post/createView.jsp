@@ -55,10 +55,13 @@
 							</c:if>
 						</div>
 						<div class="mt-2">
-							<i class="bi bi-heart mr-2 ml-2"></i>
-							<i class="bi bi-chat "></i>
-							<br>
-							<div class="mt-1 ml-2">좋아요 16개</div>
+							<c:forEach var="like" items="${ postWithComments.likeList}" varStatus="status">
+										<i class="bi bi-heart btn likeBtn" data-post-id="${postWithComments.post.id }"></i>
+										<i class="bi bi-chat "></i>
+								<br>
+								<div class="mt-1 ml-2">좋아요 ${like.userId }</div>
+							</c:forEach>
+							
 						</div>
 						
 						<div class="ml-2">
@@ -159,6 +162,25 @@
 					}
 					
 				});
+			});
+			
+			$(".likeBtn").on("click", function(){
+				var postId = $(this).data("post-id");
+				
+				$.ajax({
+					type:"get",
+					url:"/post/like",
+					data:{"postId":postId},
+					success:function(data){
+						if(data.result == "success") {
+							location.reload();
+						}
+					},
+					error:function(e) {
+						alert("error");
+					}
+						
+				});	
 			});
 		});
 	

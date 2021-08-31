@@ -3,6 +3,7 @@ package com.jeongmini.minggram.post.model;
 import java.util.List;
 
 import com.jeongmini.minggram.post.comment.model.Comment;
+import com.jeongmini.minggram.post.like.model.Like;
 
 public class PostWithComments {
 	
@@ -11,6 +12,7 @@ public class PostWithComments {
 	private Post post;
 	private List<Comment> commentList;
 	//댓글은 여러개니까 리스트 
+	private List<Like> likeList;
 	
 	public Post getPost() {
 		return post;
@@ -24,6 +26,11 @@ public class PostWithComments {
 	public void setCommentList(List<Comment> commentList) {
 		this.commentList = commentList;
 	}
-
+	public List<Like> getLikeList() {
+		return likeList;
+	}
+	public void setLikeList(List<Like> likeList) {
+		this.likeList = likeList;
+	}
 	
 }

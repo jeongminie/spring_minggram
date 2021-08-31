@@ -11,6 +11,8 @@ import com.jeongmini.minggram.common.FileManagerService;
 import com.jeongmini.minggram.post.comment.bo.CommentBO;
 import com.jeongmini.minggram.post.comment.model.Comment;
 import com.jeongmini.minggram.post.dao.PostDAO;
+import com.jeongmini.minggram.post.like.bo.LikeBO;
+import com.jeongmini.minggram.post.like.model.Like;
 import com.jeongmini.minggram.post.model.Post;
 import com.jeongmini.minggram.post.model.PostWithComments;
 
@@ -21,6 +23,9 @@ public class PostBO {
 	
 	@Autowired
 	private CommentBO commentBO;
+	
+	@Autowired
+	private LikeBO likeBO;
 	
 	public int addPost(int userId, String userName, String content, MultipartFile file) {
 		FileManagerService fileManager = new FileManagerService();
@@ -42,11 +47,14 @@ public class PostBO {
 			List<Comment> commnetList = commentBO.getCommentListByPostId(post.getId()); //포스트 리스트 안에 있는 하나하나씩 아이디로 빼오기
 			//포스트와 코멘트를 하나의 묶음으로
 			PostWithComments postWithComments = new PostWithComments();
+			List<Like> likeList = likeBO.getLikeCount(post.getUserId(),post.getId());
+			
 			postWithComments.setPost(post);
 			postWithComments.setCommentList(commnetList);
 			
+			postWithComments.setLikeList(likeList);
+
 			postWithCommentsList.add(postWithComments);
-			
 		}
 		
 		return postWithCommentsList;
