@@ -55,13 +55,21 @@
 							</c:if>
 						</div>
 						<div class="mt-2">
-							<c:forEach var="like" items="${ postWithComments.likeList}" varStatus="status">
-										<i class="bi bi-heart btn likeBtn" data-post-id="${postWithComments.post.id }"></i>
-										<i class="bi bi-chat "></i>
-								<br>
-								<div class="mt-1 ml-2">좋아요 ${like.userId }</div>
-							</c:forEach>
-							
+							<c:choose>
+								<c:when test="${postWithComments.isLike eq false}">
+									<a href="#" class="likeBtn" data-post-id="${postWithComments.post.id }">
+										<i class="bi bi-heart text-dark ml-2"></i>
+									</a>	
+								</c:when>
+								<c:otherwise>
+									<a href="#" class="likeBtn" data-post-id="${postWithComments.post.id }">
+										<i class="bi bi-heart-fill ml-2"></i>
+									</a>	
+								</c:otherwise>
+							</c:choose>
+							<i class="bi bi-chat"></i>
+							<br>
+							<div class="mt-1 ml-2">좋아요</div>		
 						</div>
 						
 						<div class="ml-2">
@@ -84,7 +92,6 @@
 						</div>
 					</div>			
 				</div>
-
 			</c:forEach>
 		</section>
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />
@@ -164,8 +171,10 @@
 				});
 			});
 			
-			$(".likeBtn").on("click", function(){
+			$(".likeBtn").on("click", function(e){
+				e.preventDefault();
 				var postId = $(this).data("post-id");
+				//a태그 기본 기능이 스크롤을 맨위로 이동시킴 이 기능을 삭제
 				
 				$.ajax({
 					type:"get",
@@ -181,6 +190,10 @@
 					}
 						
 				});	
+			});
+			
+			$("#logoClick").on("click", function(){
+				location.reload();
 			});
 		});
 	

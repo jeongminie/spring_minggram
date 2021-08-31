@@ -28,7 +28,10 @@ header {
 }
 
 .logo-size{
-	height:40px;	
+	width: auto;
+	height: 70px;
+	margin-left:800px;
+	padding : 14px;
 }
 
 .imagePath-size {
@@ -63,3 +66,4 @@ header {
 	background-color:white;
 	margin-top : 20px
 }
+

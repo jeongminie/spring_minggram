@@ -18,16 +18,14 @@
 		)
 	</insert>
 	
-	<select id="selectLikeCount" parameterType="map" resultType="com.jeongmini.minggram.post.like.model.Like">
+	<select id="selectLikeCount" parameterType="map" resultType="int">
 		SELECT
 			COUNT(1)
 		FROM
 			`like`
 		WHERE 
-			`postId` = #{postId} AND
-			`userId` = #{userId}
+			`userId` = #{userId} AND
+			`postId` = #{postId}
 	</select>
- 
- 
- 
+
 </mapper>

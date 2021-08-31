@@ -1,7 +1,9 @@
 package com.jeongmini.minggram.post;
 
-import java.util.Collections;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,13 +21,14 @@ public class PostController {
 	private PostBO postBO;
 	
 	@GetMapping("/create_view")
-	public String createView(Model model) {
-		
-		List<PostWithComments> post = postBO.getPostList();
-		int count = Collections.frequency(post, post);
+	public String createView(Model model,
+			HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int userId = (Integer) session.getAttribute("userId"); // userId 비오에게 전달 
+		List<PostWithComments> post = postBO.getPostList(userId);
 		
 		model.addAttribute("post", post);
-		model.addAttribute("count", count);
+
 		return "post/createView";
 	}
 }
