@@ -37,5 +37,13 @@
  		
  	</select>
  	
+ 	<delete id="deletePost" parameterType="int">
+		DELETE FROM
+			`post`
+		WHERE
+			`userId` = #{userId} AND
+			`id` = #{id}
+	</delete>
+ 	
 
  </mapper>

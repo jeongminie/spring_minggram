@@ -39,7 +39,7 @@ header {
 }
 
 .text-box {
-	width:500px;
+	width:700px;
 
 	border:2px solid LightGray;
 	background-color:white;
@@ -54,7 +54,7 @@ header {
 }
 
 .timeLine {
-	width: 500px;
+	width: 700px;
 
 	border:2px solid LightGray;
 	background-color:white;
@@ -67,3 +67,19 @@ header {
 	margin-top : 20px
 }
 
+
+ul, ol, li { 
+	list-style:none; margin:0; padding:0; 
+	}
+ 
+ul.my > li { 
+	display:inline-block; padding:5px 10px; text-align:center; position:relative;
+	}
+	
+ul.my > li ul.userName_dropbox { 
+	position:absolute;
+	}
+	
+ul.myMenu > li ul.userName_dropbox > li { display:inline-block; padding:5px 10px;; text-align:center;}
+
+ul.myMenu > li:hover ul.userName_dropbox { display:block; }

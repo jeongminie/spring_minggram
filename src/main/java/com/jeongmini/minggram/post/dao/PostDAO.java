@@ -18,6 +18,12 @@ public interface PostDAO {
 			);
 	
 	public List<Post> selectTimeLine();
+	
+	public int deletePost(
+			@Param("id") int id,
+			@Param("userId") int userId	
+			);
+
 
 
 }

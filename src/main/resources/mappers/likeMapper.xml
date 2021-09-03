@@ -7,12 +7,14 @@
 		INSERT INTO `like`
  		( 
  			`userId`
+ 			,`userName`
  			, `postId`
  			, `createdAt`
 		)
 		VALUES 
 		(
 			#{userId}
+			,#{userName}
 			, #{postId}
 			, now()
 		)
@@ -26,6 +28,33 @@
 		WHERE 
 			`userId` = #{userId} AND
 			`postId` = #{postId}
+	</select>
+	
+	<delete id="deleteLikeCount" parameterType="map">
+		DELETE FROM
+			`like`
+		WHERE
+			`userId` = #{userId} AND
+			`postId` = #{postId}	
+	</delete>
+	
+	<select id="selectTotalLikeCount" parameterType="map" resultType="int">
+		SELECT
+			COUNT(1)
+		FROM
+			`like`
+		WHERE 
+			`postId` = #{postId}
+	</select>
+	
+	<select id="selectLikeUser" parameterType="map" resultType="com.jeongmini.minggram.post.like.model.Like">
+		SELECT
+			`userName`
+		FROM
+			`like`
+		WHERE 
+			`postId` = #{postId}
+		LIMIT 1	
 	</select>
 
 </mapper>

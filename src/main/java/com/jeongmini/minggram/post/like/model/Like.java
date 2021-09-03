@@ -6,6 +6,7 @@ public class Like {
 	
 	private int id;
 	private int userId;
+	private String userName;
 	private int postId;
 	private Date createdAt;
 	
@@ -32,6 +33,12 @@ public class Like {
 	}
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	

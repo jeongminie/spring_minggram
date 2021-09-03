@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jeongmini.minggram.post.like.bo.LikeBO;
+import com.jeongmini.minggram.post.like.model.Like;
 
 @RestController
 @RequestMapping("/post")
@@ -21,22 +22,20 @@ public class LikeRestController {
 	private LikeBO likeBO;
 	
 	@GetMapping("/like")
-	public Map<String, String> countLike (
+	public Map<String, Boolean> countLike (
 			@RequestParam("postId") int postId,
 			HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
 		int userId = (Integer)session.getAttribute("userId");
+		String userName = (String)session.getAttribute("userName");
+		//Like like = likeBO.getLikeUser(userId, postId);
 		
-		int count = likeBO.addLikeCount(userId, postId);
+		boolean likes = likeBO.addLikeCount(userId, userName, postId);
 		
-		Map<String, String> result = new HashMap<>();
+		Map<String, Boolean> result = new HashMap<>();
 		
-		if(count == 1) {
-			result.put("result", "success");
-		} else {
-			result.put("result", "fail");
-		}
+		result.put("like", likes);
 		
 		return result;
 		

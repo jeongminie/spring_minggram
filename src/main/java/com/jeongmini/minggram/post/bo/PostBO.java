@@ -12,6 +12,7 @@ import com.jeongmini.minggram.post.comment.bo.CommentBO;
 import com.jeongmini.minggram.post.comment.model.Comment;
 import com.jeongmini.minggram.post.dao.PostDAO;
 import com.jeongmini.minggram.post.like.bo.LikeBO;
+import com.jeongmini.minggram.post.like.model.Like;
 import com.jeongmini.minggram.post.model.Post;
 import com.jeongmini.minggram.post.model.PostWithComments;
 
@@ -37,6 +38,10 @@ public class PostBO {
 		return postDAO.insertPost(userId, userName, content, filePath);
 	}
 	
+	public int deletePost(int id, int userId) {
+		return postDAO.deletePost(id, userId);
+	}
+	
 	public List<PostWithComments> getPostList(int userId) {
 		List<Post> postList = postDAO.selectTimeLine();
 		//반복문 안에서 만들면 하나만 만들어짐 
@@ -44,14 +49,18 @@ public class PostBO {
 		
 		for(Post post : postList) {
 			List<Comment> commnetList = commentBO.getCommentListByPostId(post.getId()); //포스트 리스트 안에 있는 하나하나씩 아이디로 빼오기
-			boolean isLike = likeBO.getLikeCount(userId, post.getId());
+			boolean existLike = likeBO.getLikeCount(userId, post.getId());
+			int likesCount = likeBO.gettotalLikeCount(post.getId());
+			Like likeUser = likeBO.getLikeUser(post.getId());
 			
 			//포스트와 코멘트를 하나의 묶음으로
 			PostWithComments postWithComments = new PostWithComments();
 			
 			postWithComments.setPost(post);
 			postWithComments.setCommentList(commnetList);
-			postWithComments.setLike(isLike);
+			postWithComments.setExistLike(existLike);
+			postWithComments.setLikesCount(likesCount);
+			postWithComments.setLikeUser(likeUser);
 			
 			postWithCommentsList.add(postWithComments);
 		}
