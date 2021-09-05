@@ -61,17 +61,14 @@ public class PostRestController {
 			 @RequestParam("id") int id, 
 			 HttpServletRequest request 
 			 ) {
-		 
+		
 		Post post = new Post();
 		HttpSession session = request.getSession(); 
 		int userId = (Integer)session.getAttribute("userId");
 		
-		session.setAttribute("postId", post.getId());
-		int postId = (Integer)session.getAttribute("postId");
-	 
 		int deletePost = postBO.deletePost(id, userId);
-		int deleteLike = likeBO.deletePostLike(postId);
-		int deleteComment = commentBO.deletePostComment(postId);
+		int deleteLike = likeBO.deletePostLike(id);
+		int deleteComment = commentBO.deletePostComment(id);
 		
 		Map<String, String> result = new HashMap<>();
 	 
