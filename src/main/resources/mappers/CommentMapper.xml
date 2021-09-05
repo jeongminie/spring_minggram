@@ -40,4 +40,10 @@
  		ORDER BY `id` DESC;
  		
  	</select>
+ 	
+ 	<delete id="deletePostComment" parameterType="int">
+ 		DELETE FROM `comment`
+		WHERE
+			`postId` = #{postId}
+ 	</delete>
  </mapper>

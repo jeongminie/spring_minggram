@@ -47,5 +47,9 @@ public class FileManagerService {
 		
 		
 	}
+	
+	//public String deleteFile(int userId, MultipartFile file) {
+		
+	//}
 
 }

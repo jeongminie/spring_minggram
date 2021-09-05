@@ -41,5 +41,9 @@ public class LikeBO {
 	public Like getLikeUser(int postId) {
 		return likeDAO.selectLikeUser(postId);
 	}
+	
+	public int deletePostLike(int postId) {
+		return likeDAO.deletePostLike(postId);
+	}
 
 }

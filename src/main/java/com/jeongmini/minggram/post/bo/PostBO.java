@@ -38,8 +38,18 @@ public class PostBO {
 		return postDAO.insertPost(userId, userName, content, filePath);
 	}
 	
+	
+	//public int deletePost(int postId, int userId, String userName, String content, MultipartFile file) { 
+		//FileManagerService fileManager = new FileManagerService();
+	  
+	 // String filePath = fileManager.deleteFile(userId, file);
+	  
+	  //return postDAO.deletePost(postId, userId, content, userName, filePath); 
+	  //}
+	 
+	
 	public int deletePost(int id, int userId) {
-		return postDAO.deletePost(id, userId);
+		return postDAO.deletePost(id, userId, null, null, null);
 	}
 	
 	public List<PostWithComments> getPostList(int userId) {

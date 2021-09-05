@@ -26,10 +26,10 @@ public class LikeRestController {
 			@RequestParam("postId") int postId,
 			HttpServletRequest request) {
 		
+		//Like like = likeBO.getLikeUser(userId, postId);
 		HttpSession session = request.getSession();
 		int userId = (Integer)session.getAttribute("userId");
 		String userName = (String)session.getAttribute("userName");
-		//Like like = likeBO.getLikeUser(userId, postId);
 		
 		boolean likes = likeBO.addLikeCount(userId, userName, postId);
 		
@@ -40,5 +40,19 @@ public class LikeRestController {
 		return result;
 		
 	}
+	
+	/*
+	 * @GetMapping("/delete") public Map<String, String> getDeletePost(
+	 * 
+	 * @RequestParam("postId") int postId ) { int count =
+	 * likeBO.deletePostLike(postId);
+	 * 
+	 * Map<String, String> result = new HashMap<>();
+	 * 
+	 * if(count == 1) { result.put("result", "success"); } else {
+	 * result.put("result", "fail"); } return result;
+	 * 
+	 * }
+	 */
 
 }

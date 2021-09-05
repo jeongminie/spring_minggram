@@ -15,12 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jeongmini.minggram.post.bo.PostBO;
+import com.jeongmini.minggram.post.comment.bo.CommentBO;
+import com.jeongmini.minggram.post.like.bo.LikeBO;
+import com.jeongmini.minggram.post.model.Post;
 
 @RestController
 @RequestMapping("/post")
 public class PostRestController {
 	@Autowired
 	private PostBO postBO;
+
+	@Autowired
+	private CommentBO commentBO;
+	
+	@Autowired
+	private LikeBO likeBO;
 	
 	@PostMapping("/create")
 	public Map<String, String> create(
@@ -47,24 +56,32 @@ public class PostRestController {
 
 	}
 	
-	@GetMapping("/delete") 
-	public Map<String, String> delete(
-			@RequestParam("id") int id,
-			HttpServletRequest request
-			) {
-		HttpSession session = request.getSession();
+	 @GetMapping("/delete") 
+	 public Map<String, String> delete(
+			 @RequestParam("id") int id, 
+			 HttpServletRequest request 
+			 ) {
+		 
+		Post post = new Post();
+		HttpSession session = request.getSession(); 
 		int userId = (Integer)session.getAttribute("userId");
 		
-		int count = postBO.deletePost(id, userId);
+		session.setAttribute("postId", post.getId());
+		int postId = (Integer)session.getAttribute("postId");
+	 
+		int deletePost = postBO.deletePost(id, userId);
+		int deleteLike = likeBO.deletePostLike(postId);
+		int deleteComment = commentBO.deletePostComment(postId);
 		
 		Map<String, String> result = new HashMap<>();
-		
-		if(count == 1) {
-			result.put("result", "success");
+	 
+		if(deletePost == 1 && deleteLike == 1 && deleteComment == 1) { 
+			result.put("result", "success"); 
 		} else {
-			result.put("result", "fail");
-		}		
-		return result;		
-	}
-
+			result.put("result", "fail"); 
+		} 
+		
+		return result; 
+		}
+	 
 }

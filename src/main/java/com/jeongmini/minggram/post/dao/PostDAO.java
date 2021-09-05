@@ -21,7 +21,10 @@ public interface PostDAO {
 	
 	public int deletePost(
 			@Param("id") int id,
-			@Param("userId") int userId	
+			@Param("userId") int userId,
+			@Param("userName") String userName,
+			@Param("content") String content,
+			@Param("imagePath") String imagePath
 			);
 
 

@@ -49,7 +49,7 @@
 								</div>
 								<!-- 삭제하기!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 								<div class="more-icon" >
-									<a href="#" class="text-dark moreBtn" data-toggle="modal" data-target="#deleteModal" id="${postWithComments.post.id }">
+									<a href="#" class="text-dark moreBtn" data-toggle="modal" data-target="#deleteModal" data-post-id="${postWithComments.post.id }">
 										<i class="bi bi-three-dots mr-2"></i>
 									</a>
 								</div>
@@ -109,19 +109,20 @@
 		</div>
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />
 	
+	<!-- 모달의 a태그에 data-post-id의 값을 더보기 클릭시 마다 바꿔준다. -->
+	<!-- 모달의 a태그의 클릭 이벤트를 만들고 그안에서 post-id로 삭제를 진행-->
+	
 	<!-- Modal -->
 	<!-- 삭제 될 대상의 정보를 가지고 있어야함  -->
-	<c:forEach var="postWithComments" items="${post }">
 	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-body text-center">
-	        <a href="#" id="deleteModal-${postWithComments.post.id }" data-post-id="${postWithComments.post.id }" >삭제 하기</a> <!-- 객체화 -->
+	        <a href="#" id="deleteBtn">삭제 하기</a> <!-- 객체화 -->
 	      </div>
 	    </div>
 	  </div>
 	</div>
-	</c:forEach>
 
 	
 	<script>
@@ -253,25 +254,31 @@
 			$(".moreBtn").on("click", function(){
 				//postId를 모델에 삭제버튼에 주입한다
 				var postId = $(this).data("post-id");
-				var deletepostId = $(".modal-body #deleteModal-"+ postId).val();
+				//객체 가져옴 데이타 주입 data-post-id  주입
+				$("#deleteBtn").data("post-id", postId);
 				
+			});
+			
+			$("#deleteBtn").on("click", function(e){
+				e.preventDefault();
+				var postId = $(this).data("post-id");
+
 				$.ajax({
 					type:"get",
 					url:"/post/delete",
 					data:{"id":postId},
 					success:function(data) {
-							if(data.result == "success") {
-
+						if(data.result == "success") {
+							location.reload();
 						} else {
-							alert("삭제실패");
+							alert("실패");
 						}
 					},
-					error:function(e){
+					error:function(e) {
 						alert("error");
-					}
+					}	
 					
 				});
-				
 				
 			});
 		});

@@ -57,4 +57,10 @@
 		LIMIT 1	
 	</select>
 
+ 	<delete id="deletePostLike" parameterType="int">
+		DELETE FROM
+			`like`
+		WHERE
+			`postId` = #{postId}
+	</delete>
 </mapper>

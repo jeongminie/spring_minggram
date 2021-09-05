@@ -41,8 +41,11 @@
 		DELETE FROM
 			`post`
 		WHERE
+			`id` = #{id} AND
 			`userId` = #{userId} AND
-			`id` = #{id}
+			`userName` = #{userName} AND
+			`content` = #{content} AND
+			`imagePath` = #{imagePath}
 	</delete>
  	
 
