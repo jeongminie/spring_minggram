@@ -3,6 +3,8 @@ package com.jeongmini.minggram.post.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +20,9 @@ import com.jeongmini.minggram.post.model.PostWithComments;
 
 @Service
 public class PostBO {
+	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private PostDAO postDAO;
 	
@@ -38,18 +43,23 @@ public class PostBO {
 		return postDAO.insertPost(userId, userName, content, filePath);
 	}
 	
-	
-	//public int deletePost(int postId, int userId, String userName, String content, MultipartFile file) { 
-		//FileManagerService fileManager = new FileManagerService();
-	  
-	 // String filePath = fileManager.deleteFile(userId, file);
-	  
-	  //return postDAO.deletePost(postId, userId, content, userName, filePath); 
-	  //}
-	 
-	
-	public int deletePost(int id, int userId) {
-		return postDAO.deletePost(id, userId, null, null, null);
+
+	public boolean deletePost(int postId, int userId) {
+		//삭제되기 전에 미리 가져오기
+		Post post = postDAO.selectPost(postId);
+		int count = postDAO.deletePost(postId, userId);
+		
+		if(count != 1) {
+			return false;	
+		}
+		
+		FileManagerService fileManagerService = new FileManagerService();
+		fileManagerService.removeFile(post.getImagePath());
+		
+		likeBO.deletePostLike(postId);
+		commentBO.deletePostComment(postId);
+		
+		return true;
 	}
 	
 	public List<PostWithComments> getPostList(int userId) {

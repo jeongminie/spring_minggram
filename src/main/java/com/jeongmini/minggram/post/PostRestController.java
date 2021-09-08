@@ -25,12 +25,6 @@ public class PostRestController {
 	@Autowired
 	private PostBO postBO;
 
-	@Autowired
-	private CommentBO commentBO;
-	
-	@Autowired
-	private LikeBO likeBO;
-	
 	@PostMapping("/create")
 	public Map<String, String> create(
 			@RequestParam("content") String content,
@@ -58,27 +52,23 @@ public class PostRestController {
 	
 	 @GetMapping("/delete") 
 	 public Map<String, String> delete(
-			 @RequestParam("id") int id, 
+		//파라미터 이름에 들어있는 값을 꺼내서    여기 변수에 저장(얜 아무거나 써도됨)
+			 @RequestParam("postId") int postId, 
 			 HttpServletRequest request 
 			 ) {
 		
-		Post post = new Post();
 		HttpSession session = request.getSession(); 
 		int userId = (Integer)session.getAttribute("userId");
 		
-		int deletePost = postBO.deletePost(id, userId);
-		int deleteLike = likeBO.deletePostLike(id);
-		int deleteComment = commentBO.deletePostComment(id);
-		
 		Map<String, String> result = new HashMap<>();
-	 
-		if(deletePost == 1 && deleteLike == 1 && deleteComment == 1) { 
-			result.put("result", "success"); 
-		} else {
-			result.put("result", "fail"); 
+		
+		if(postBO.deletePost(postId, userId)) {
+			result.put("result", "success");
+		}else {
+			result.put("result", "fail");
 		} 
 		
 		return result; 
-		}
+	}
 	 
 }

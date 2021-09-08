@@ -26,6 +26,7 @@
  	<select id="selectTimeLine" parameterType="map" resultType="com.jeongmini.minggram.post.model.Post">
  		SELECT
  			`id`
+ 			, `userId`
  			, `userName`
  			, `content`
  			, `imagePath`
@@ -42,11 +43,24 @@
 			`post`
 		WHERE
 			`id` = #{id} AND
-			`userId` = #{userId} AND
-			`userName` = #{userName} AND
-			`content` = #{content} AND
-			`imagePath` = #{imagePath}
+			`userId` = #{userId}
+			
 	</delete>
  	
+ 	<select id="selectPost" parameterType="int" resultType="com.jeongmini.minggram.post.model.Post">
+ 		SELECT
+ 			`id`
+ 			, `userId`
+ 			, `userName`
+ 			, `content`
+ 			, `imagePath`
+ 			, `createdAt`
+ 			, `updatedAt`
+ 		FROM
+ 			`post`
+ 		WHERE
+ 			`id` = #{id}
+ 		
+ 	</select>
 
  </mapper>

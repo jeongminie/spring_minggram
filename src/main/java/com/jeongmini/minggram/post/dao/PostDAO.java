@@ -19,12 +19,12 @@ public interface PostDAO {
 	
 	public List<Post> selectTimeLine();
 	
+	//하나만 가져올땐 클래스 이름
+	public Post selectPost(@Param("id") int id);
+	
 	public int deletePost(
 			@Param("id") int id,
-			@Param("userId") int userId,
-			@Param("userName") String userName,
-			@Param("content") String content,
-			@Param("imagePath") String imagePath
+			@Param("userId") int userId
 			);
 
 

@@ -24,7 +24,7 @@
 					<div class="text-box rounded">
 						<div class="userNameInfo mt-2 mb-2">
 							<i class="bi bi-person-circle mr-2"></i>
-							<c:if test="${not empty userName }">
+							<c:if test="${not empty userName}">
 								${userName }
 							</c:if>
 						</div>
@@ -47,13 +47,17 @@
 									<i class="bi bi-person-circle mr-2"></i>
 									<span>${postWithComments.post.userName }</span>
 								</div>
-								<!-- 삭제하기!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-								<div class="more-icon" >
-									<a href="#" class="text-dark moreBtn" data-toggle="modal" data-target="#deleteModal" data-post-id="${postWithComments.post.id }">
-										<i class="bi bi-three-dots mr-2"></i>
-									</a>
-								</div>
+
+								<!-- 글의 userId와 세션의 userId가 일치하면 더보기 버튼 노출 세션에 있는거 불러올땐 그냥 쓰면됨-->
+								<c:if test="${postWithComments.post.userId eq userId}">
+									<div class="more-icon" >
+										<a href="#" class="text-dark moreBtn" data-toggle="modal" data-target="#deleteModal" data-post-id="${postWithComments.post.id }">
+											<i class="bi bi-three-dots mr-2"></i>
+										</a>
+									</div>
+								</c:if>
 							</div>
+							
 							<div>
 								<c:if test="${not empty postWithComments.post.imagePath }">
 									<img src="${postWithComments.post.imagePath }" class="imagePath-size w-100 imageClick" data-post-id="${ postWithComments.post.id }">
@@ -106,8 +110,8 @@
 					</div>
 				</c:forEach>
 			</section>
-		</div>
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />
+		</div>
 	
 	<!-- 모달의 a태그에 data-post-id의 값을 더보기 클릭시 마다 바꿔준다. -->
 	<!-- 모달의 a태그의 클릭 이벤트를 만들고 그안에서 post-id로 삭제를 진행-->
@@ -266,7 +270,8 @@
 				$.ajax({
 					type:"get",
 					url:"/post/delete",
-					data:{"id":postId},
+					/* ""안에 있는게 중요! 여기는 위에 var postId랑 동일 */
+					data:{"postId":postId}, 
 					success:function(data) {
 						if(data.result == "success") {
 							location.reload();
