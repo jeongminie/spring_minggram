@@ -29,13 +29,13 @@
  * 로그인
     * package :  [com.jeongmini.minggram.user.*](https://github.com/jeongminiee/spring_minggram/tree/develop/src/main/java/com/jeongmini/minggram/user)
     * view  : [/webapp/WEB-INF/jsp/user/*](https://github.com/jeongminiee/spring_minggram/tree/develop/src/main/webapp/WEB-INF/jsp/user)
- * 게시물 작성 & 일기 작성
+ * 포스트 작성
     * package :[com.jeongmini.minggram.post.*](https://github.com/jeongminiee/spring_minggram/tree/develop/src/main/java/com/jeongmini/minggram/post)
     * view  : [/webapp/WEB-INF/jsp/post/*](https://github.com/jeongminiee/spring_minggram/tree/develop/src/main/webapp/WEB-INF/jsp/post)
  * 댓글
     * package :[com.jeongmini.minggram.post.comment.*](https://github.com/jeongminiee/spring_minggram/tree/develop/src/main/java/com/jeongmini/minggram/post/comment)
     * view  :  [/webapp/WEB-INF/jsp/post/*](https://github.com/jeongminiee/spring_minggram/tree/develop/src/main/webapp/WEB-INF/jsp/post)
- * 공감
+ * 좋아요
     * package : [com.jeongmini.minggram.post.like.*](https://github.com/jeongminiee/spring_minggram/tree/develop/src/main/java/com/jeongmini/minggram/post/like)
     * view  : [/webapp/WEB-INF/jsp/post/*](https://github.com/jeongminiee/spring_minggram/tree/develop/src/main/webapp/WEB-INF/jsp/post)
 
