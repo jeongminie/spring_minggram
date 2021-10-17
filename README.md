@@ -10,7 +10,7 @@
 ![MYSQL](https://img.shields.io/badge/MYSQL-FA58D0?style=flat-square&logo=MYSQL&logoColor=black)
 ![AWS](https://img.shields.io/badge/AWS-FA5882?style=flat-square&logo=AmazonAWS&logoColor=black)
 
-## :last_quarter_moon_with_face:프로젝트 설명:first_quarter_moon_with_face:
+## :iphone:프로젝트 설명:camera:
 - 웹 서비스를 개발 경험을 쌓기 위한 instragram 모방사이트 '밍그램' 프로젝트 개발
 - 기본적인 로그인 기반의 SNS 기능
  
